@@ -185,7 +185,7 @@ public class RabbitConfig {
     }
 
     /**
-     * 将普通队列1绑定到叫环境（Topic）上
+     * 将普通队列2绑定到叫环境（Topic）上
      * @return
      */
     @Bean
