@@ -149,7 +149,7 @@ public class RabbitConfig {
      * 创建普通的消息队列1（用户绑定到交换机topic上）
      * @return
      */
-    @Bean(name = "msg1")
+    @Bean
     public Queue testQueuetoTopic1(){
 
         return new Queue(RabbitConstant.TEST_QUEUE_TO_TOPIC1,true,false,false);
@@ -159,7 +159,7 @@ public class RabbitConfig {
      * 创建普通的消息队列2（用户绑定到交换机topic上）
      * @return
      */
-    @Bean(name = "msg2")
+    @Bean
     public Queue testQueuetoTopic2(){
 
         return new Queue(RabbitConstant.TEST_QUEUE_TO_TOPIC2,true,false,false);
@@ -180,25 +180,9 @@ public class RabbitConfig {
      * @return
      */
     @Bean
-    public Binding bindingTopic1(@Qualifier("msg1")Queue queueMessages,TopicExchange exchange){
+    public Binding bindingTopic1(@Qualifier("testQueuetoTopic1")Queue queueMessages,TopicExchange exchange){
         return BindingBuilder.bind(queueMessages).to(exchange).with(RabbitConstant.TOPIC_EXCHANGE_ROUTING_KEY);
     }
-
-    /**
-     * 将普通队列1绑定到叫环境（Topic）上
-     * @return
-     */
-    @Bean
-    public Binding bindingTopic2(@Qualifier("msg2")Queue queueMessages, TopicExchange exchange){
-        return BindingBuilder.bind(queueMessages).to(exchange).with(RabbitConstant.TOPIC_EXCHANGE_ROUTING_KEY);
-    }
-
-
-
-
-
-
-
 
 
 }
