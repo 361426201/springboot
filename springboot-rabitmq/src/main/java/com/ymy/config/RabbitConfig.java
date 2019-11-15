@@ -2,6 +2,8 @@ package com.ymy.config;
 
 import com.ymy.utils.RabbitConstant;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.transaction.RabbitTransactionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -183,6 +185,10 @@ public class RabbitConfig {
     public Binding bindingTopic1(@Qualifier("testQueuetoTopic1")Queue queueMessages,TopicExchange exchange){
         return BindingBuilder.bind(queueMessages).to(exchange).with(RabbitConstant.TOPIC_EXCHANGE_ROUTING_KEY);
     }
+
+
+
+
 
 
 }

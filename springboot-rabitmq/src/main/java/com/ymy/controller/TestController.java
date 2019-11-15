@@ -1,5 +1,6 @@
 package com.ymy.controller;
 
+import com.ymy.Rabbitmq.TXMessage;
 import com.ymy.entity.User;
 import com.ymy.utils.RabbitConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TestController {
 
-    @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    private TXMessage txMessage;
+
+    @Autowired
+    public  TestController(RabbitTemplate rabbitTemplate, TXMessage txMessage){
+        this.rabbitTemplate = rabbitTemplate;
+        this.txMessage = txMessage;
+    }
 
     /**
      * 发送普通消息队列，参数为字符串
@@ -81,5 +89,20 @@ public class TestController {
     }
 
 
+
+    /**
+     * 事务消息
+     */
+    @GetMapping(value = "sendTXMsg")
+    public String sendTXMsg() {
+        User user = new User();
+        user.setId(1);
+        user.setName("张三");
+        user.setAge(18);
+        txMessage.sendIngateQueue(user);
+        log.info("需要确认的消息发送完成");
+
+        return "Success!!!!";
+    }
 
 }
